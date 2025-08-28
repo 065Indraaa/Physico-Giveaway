@@ -254,14 +254,14 @@
       div.appendChild(note);
 
       if (today < start) {
-        badge.textContent = "ðŸ”” Belum Dimulai";
+        badge.textContent = "🔔 Belum Dimulai";
         badge.classList.add("upcoming");
         link.className = "link disabled";
         link.textContent = "Belum Dimulai";
         div.appendChild(link);
         countdownDiv.textContent = "Mulai pada: " + formatDate(gw.startDate);
       } else if (today > end) {
-        badge.textContent = "âŒ Selesai";
+        badge.textContent = "❌ Selesai";
         badge.classList.add("ended");
         link.className = "link disabled";
         link.textContent = "Giveaway Selesai";
@@ -270,7 +270,7 @@
         if (gw.winner && gw.winner.trim() !== "") {
           const winnerDiv = document.createElement("div");
           winnerDiv.className = "winner";
-          winnerDiv.innerHTML = "ðŸ† Pemenang: " + gw.winner;
+          winnerDiv.innerHTML = "🏆 Pemenang: " + gw.winner;
           if (gw.proof && gw.proof.trim() !== "") {
             const proofLink = document.createElement("a");
             proofLink.href = gw.proof;
@@ -286,7 +286,7 @@
           div.appendChild(pendingDiv);
         }
       } else {
-        badge.textContent = "âœ… Sedang Berlangsung";
+        badge.textContent = "✅ Sedang Berlangsung";
         badge.classList.add("active");
         link.className = "link";
         div.appendChild(link);
