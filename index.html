@@ -170,9 +170,9 @@
 </head>
 <body>
   <header>
-    <h1>🥳 Giveaway Center</h1>
+    <h1>🎉 Giveaway Center</h1>
     <div class="contact">
-      <a href="https://t.me/Physicooo" target="_blank">📥 Kontak Admin</a>
+      <a href="https://t.me/Physicooo" target="_blank">📩 Kontak Admin</a>
     </div>
   </header>
 
@@ -227,11 +227,11 @@
 
       const duration = document.createElement("div");
       duration.className = "duration";
-      duration.textContent = `Durasi: ${formatDate(gw.startDate)} â€“ ${formatDate(gw.endDate)}`;
+      duration.textContent = `Durasi: ${formatDate(gw.startDate)} – ${formatDate(gw.endDate)}`;
 
       const note = document.createElement("div");
       note.className = "note";
-      note.innerHTML = parseLinks(gw.note); // â¬…ï¸ link auto aktif
+      note.innerHTML = parseLinks(gw.note); // ⬅️ link auto aktif
 
       const link = document.createElement("a");
       link.href = gw.link;
@@ -275,7 +275,7 @@
             const proofLink = document.createElement("a");
             proofLink.href = gw.proof;
             proofLink.target = "_blank";
-            proofLink.textContent = "ðŸ“Ž Lihat Bukti";
+            proofLink.textContent = "📎 Lihat Bukti";
             winnerDiv.appendChild(proofLink);
           }
           div.appendChild(winnerDiv);
