@@ -170,9 +170,9 @@
 </head>
 <body>
   <header>
-    <h1>🎉 Giveaway Center</h1>
+    <h1>ðŸŽ‰ Giveaway Center</h1>
     <div class="contact">
-      <a href="https://t.me/Physicooo" target="_blank">📩 Kontak Admin</a>
+      <a href="https://t.me/Physicooo" target="_blank">ðŸ“© Kontak Admin</a>
     </div>
   </header>
 
@@ -227,11 +227,11 @@
 
       const duration = document.createElement("div");
       duration.className = "duration";
-      duration.textContent = Durasi: ${formatDate(gw.startDate)} – ${formatDate(gw.endDate)};
+      duration.textContent = `Durasi: ${formatDate(gw.startDate)} â€“ ${formatDate(gw.endDate)}`;
 
       const note = document.createElement("div");
       note.className = "note";
-      note.innerHTML = parseLinks(gw.note); // ⬅️ link auto aktif
+      note.innerHTML = parseLinks(gw.note); // â¬…ï¸ link auto aktif
 
       const link = document.createElement("a");
       link.href = gw.link;
@@ -254,14 +254,14 @@
       div.appendChild(note);
 
       if (today < start) {
-        badge.textContent = "🔔 Belum Dimulai";
+        badge.textContent = "ðŸ”” Belum Dimulai";
         badge.classList.add("upcoming");
         link.className = "link disabled";
         link.textContent = "Belum Dimulai";
         div.appendChild(link);
         countdownDiv.textContent = "Mulai pada: " + formatDate(gw.startDate);
       } else if (today > end) {
-        badge.textContent = "❌ Selesai";
+        badge.textContent = "âŒ Selesai";
         badge.classList.add("ended");
         link.className = "link disabled";
         link.textContent = "Giveaway Selesai";
@@ -270,12 +270,12 @@
         if (gw.winner && gw.winner.trim() !== "") {
           const winnerDiv = document.createElement("div");
           winnerDiv.className = "winner";
-          winnerDiv.innerHTML = "🏆 Pemenang: " + gw.winner;
+          winnerDiv.innerHTML = "ðŸ† Pemenang: " + gw.winner;
           if (gw.proof && gw.proof.trim() !== "") {
             const proofLink = document.createElement("a");
             proofLink.href = gw.proof;
             proofLink.target = "_blank";
-            proofLink.textContent = "📎 Lihat Bukti";
+            proofLink.textContent = "ðŸ“Ž Lihat Bukti";
             winnerDiv.appendChild(proofLink);
           }
           div.appendChild(winnerDiv);
@@ -286,7 +286,7 @@
           div.appendChild(pendingDiv);
         }
       } else {
-        badge.textContent = "✅ Sedang Berlangsung";
+        badge.textContent = "âœ… Sedang Berlangsung";
         badge.classList.add("active");
         link.className = "link";
         div.appendChild(link);
@@ -305,7 +305,7 @@
           const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-          countdownDiv.textContent = ⏳ Sisa waktu: ${days}h ${hours}j ${minutes}m ${seconds}d;
+          countdownDiv.textContent = `â³ Sisa waktu: ${days}h ${hours}j ${minutes}m ${seconds}d`;
         }
         setInterval(updateCountdown, 1000);
         updateCountdown();
