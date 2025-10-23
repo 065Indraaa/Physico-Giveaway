@@ -1,318 +1,348 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Physico Giveaway</title>
-  <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f6f9;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #007bff;
-      color: white;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 22px;
-    }
-    header .contact {
-      margin-top: 6px;
-    }
-    header .contact a {
-      color: #fff;
-      text-decoration: none;
-      background: rgba(255,255,255,0.2);
-      padding: 6px 12px;
-      border-radius: 6px;
-      transition: 0.3s;
-      font-size: 14px;
-    }
-    header .contact a:hover {
-      background: rgba(255,255,255,0.35);
-    }
-    .container {
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    .giveaway {
-      background: white;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-      border-top: 4px solid #007bff;
-    }
-    .giveaway:hover {
-      transform: translateY(-4px);
-    }
-    .title {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 6px;
-      color: #222;
-    }
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .badge.active { background: #e3f2fd; color: #0d47a1; }
-    .badge.upcoming { background: #fff3cd; color: #856404; }
-    .badge.ended { background: #f8d7da; color: #721c24; }
-    .duration {
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 6px;
-    }
-    .countdown {
-      font-size: 15px;
-      font-weight: bold;
-      margin-bottom: 12px;
-      color: #007bff;
-    }
-    .note {
-      font-size: 15px;
-      margin-bottom: 15px;
-      color: #333;
-      white-space: pre-line;
-    }
-    .note a {
-      color: #007bff;
-      text-decoration: none;
-    }
-    .note a:hover {
-      text-decoration: underline;
-    }
-    .link {
-      display: inline-block;
-      padding: 10px 16px;
-      background: #007bff;
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
-      font-size: 15px;
-    }
-    .link:hover {
-      background: #0056b3;
-    }
-    .link.disabled {
-      background: gray;
-      pointer-events: none;
-      cursor: not-allowed;
-    }
-    .winner {
-      margin-top: 14px;
-      padding: 12px;
-      background: #e8f5e9;
-      border: 1px solid #4caf50;
-      border-radius: 8px;
-      font-size: 15px;
-      color: #2e7d32;
-      font-weight: bold;
-    }
-    .winner a {
-      display: inline-block;
-      margin-top: 8px;
-      font-size: 13px;
-      padding: 6px 10px;
-      background: #4caf50;
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    .winner a:hover {
-      background: #388e3c;
-    }
-    .pending {
-      margin-top: 12px;
-      font-size: 14px;
-      color: #888;
-      font-style: italic;
-    }
-
-    /* Responsif */
-    @media (max-width: 600px) {
-      header {
-        text-align: center;
-        justify-content: center;
-      }
-      header h1 {
-        font-size: 18px;
-        width: 100%;
-      }
-      header .contact {
-        width: 100%;
-        margin-top: 10px;
-      }
-      .title { font-size: 17px; }
-      .note { font-size: 14px; }
-      .link { font-size: 14px; padding: 8px 12px; }
-    }
-  </style>
+<meta charset="utf-8"/>
+<title>Detect & Derive (Tanpa Bruteforce) — Pubkey / Seed</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>
+body{font-family:ui-monospace,monospace;padding:18px;max-width:980px;margin:auto;background:#f7fafc;}
+label{display:block;margin:10px 0 6px 0;font-weight:600;}
+input,button,select,textarea{font-size:15px;padding:8px 10px;border-radius:6px;border:1px solid #ccc;width:100%;}
+button{width:auto;cursor:pointer;margin-right:8px;}
+#output{white-space:pre-wrap;background:#fff;border:1px solid #ddd;padding:12px;height:50vh;overflow:auto;font-size:13px;line-height:1.45;}
+.hit{background:#e6ffed;padding:6px;border-radius:4px;}
+.small{font-size:12px;color:#555;margin-top:6px;}
+.row{display:flex;gap:8px;align-items:center;}
+.row > *{flex:1;}
+</style>
 </head>
 <body>
-  <header>
-    <h1>🎉 Giveaway Center</h1>
-    <div class="contact">
-      <a href="https://t.me/pakdezakii" target="_blank">📩 Kontak Admin</a>
-    </div>
-  </header>
+<h2>Detect & Derive (Tanpa Bruteforce)</h2>
 
-  <div class="container" id="giveaway-list"></div>
+<label>RPC endpoint:
+  <input id="rpcUrl" value="https://api.mainnet-beta.solana.com">
+</label>
 
-  <script>
-    function formatDate(dateStr) {
-      const options = { day: "2-digit", month: "long", year: "numeric" };
-      return new Date(dateStr).toLocaleDateString("id-ID", options);
-    }
+<div class="row" style="margin:8px 0;">
+  <div style="flex:1">
+    <label>Target Base58 / Base64 / HEX / seed:
+      <input id="targetInput" placeholder="tempel pubkey / seed / secretKey (base58/base64/hex)">
+    </label>
+  </div>
+  <div style="width:140px">
+    <label>&nbsp;
+      <button id="checkBtn">Cek</button>
+    </label>
+  </div>
+</div>
 
-    // fungsi agar link di note otomatis bisa diklik
-    function parseLinks(text) {
-      return text.replace(
-        /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank">$1</a>'
-      );
-    }
+<div style="margin-bottom:8px;">
+  <button id="clearBtn">Clear</button>
+  <button id="helpBtn">Petunjuk singkat</button>
+</div>
 
-    // Daftar giveaway
-    const giveaways = [
-      {
-        title: "Giveaway 1 - 0.1 SOL untuk 1 pemenang",
-        note: "Syarat:\n1. Follow Twitter @indrbchtrrr\n2. Like & RT postingan terakhir\n3. Isi form di bawah",
-        link: "https://forms.gle/xxxxxx",
-        startDate: "2025-08-17",
-        endDate: "2025-08-22",
-        winner: "Budi" ,
-        proof: "https://solscan.io/tx/5wHVzq82su2znjwE4aTXNg5Z6TSPEQFbMBcSibD1AsxjZ6pQh1HTSYUDkdLKMrGYPMaGfpXuVo9jXqJYeWKbCKCk"
-      },
-      {
-        title: "Giveaway 2 - 100Ribu/1 orang (5 Pemenang)",
-        note: "Syarat:\n1. Join Discord : https://discord.gg/DY8dB6Ec6m\n2. Pastikan memakai akun minimal 1 bulan\n3. Klik Ikuti giveaway untuk kirim bukti\n4. Akan hangus jika kalian memakai akun baru, bisa multiple account",
-        link: "https://docs.google.com/forms/d/e/1FAIpQLSfr7nNcT1g1xY_WypmYyiDt8X8Jk-h1DFc2qUHux43_Qu4RgA/viewform?usp=dialog",
-        startDate: "2025-08-28",
-        endDate: "2025-09-05",
-        winner: "",
-        proof: ""
+<div id="status" class="small">Ready — tempel pubkey atau seed lalu klik "Cek".</div>
+<div id="output"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js"></script>
+<script>
+/* ---------- util base58 (encode/decode) ---------- */
+const ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+function encodeBase58(buffer){
+  let digits=[0];
+  for(let i=0;i<buffer.length;i++){
+    let carry = buffer[i];
+    for(let j=0;j<digits.length;j++){ carry += digits[j]<<8; digits[j] = carry % 58; carry = (carry/58)|0; }
+    while(carry>0){ digits.push(carry%58); carry=(carry/58)|0; }
+  }
+  for(let k=0;k<buffer.length && buffer[k]===0;k++) digits.push(0);
+  return digits.reverse().map(d=>ALPHABET[d]).join('');
+}
+function decodeBase58(str){
+  if(typeof str !== 'string') throw new Error('not string');
+  const bytes=[0];
+  for(let i=0;i<str.length;i++){
+    const idx = ALPHABET.indexOf(str[i]);
+    if(idx === -1) throw new Error('invalid base58 char');
+    let carry = idx;
+    for(let j=0;j<bytes.length;j++){ carry += bytes[j]*58; bytes[j] = carry & 0xff; carry = carry >> 8; }
+    while(carry>0){ bytes.push(carry & 0xff); carry = carry >> 8; }
+  }
+  // convert little-endian bytes -> big-endian Uint8Array
+  const out = new Uint8Array(bytes.length);
+  for(let i=0;i<bytes.length;i++) out[i] = bytes[bytes.length-1-i];
+  // leading zeros (base58 '1')
+  let nPad = 0;
+  for(let i=0;i<str.length && str[i] === ALPHABET[0]; i++) nPad++;
+  if(nPad>0){
+    const withPad = new Uint8Array(out.length + nPad);
+    withPad.set(out, nPad);
+    return withPad;
+  }
+  return out;
+}
+
+/* ---------- helpers hex/base64 ---------- */
+function isHex(s){ return /^[0-9a-fA-F]+$/.test(s.replace(/^0x/,'')); }
+function hexToBytes(hex){
+  hex = hex.replace(/^0x/,'');
+  if(hex.length%2) hex = '0'+hex;
+  const u = new Uint8Array(hex.length/2);
+  for(let i=0;i<u.length;i++) u[i] = parseInt(hex.slice(i*2,i*2+2),16);
+  return u;
+}
+function uint8ToHex(u){ return Array.from(u).map(b=>b.toString(16).padStart(2,'0')).join(''); }
+function base64ToBytes(s){
+  try{
+    const bin = atob(s);
+    const u = new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++) u[i] = bin.charCodeAt(i);
+    return u;
+  }catch(e){ throw new Error('invalid base64');}
+}
+
+/* ---------- RPC ---------- */
+async function rpcPost(url, body, timeoutMs=20000){
+  const ctr = new AbortController();
+  const id = setTimeout(()=>ctr.abort(), timeoutMs);
+  try{
+    const res = await fetch(url, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body), signal: ctr.signal });
+    clearTimeout(id);
+    return await res.json();
+  }catch(e){ clearTimeout(id); throw e; }
+}
+async function getBalanceRpc(rpcUrl, pubkey){
+  const body = { jsonrpc:"2.0", id:1, method:"getBalance", params:[pubkey] };
+  const r = await rpcPost(rpcUrl, body);
+  if(r && r.result && typeof r.result.value !== 'undefined') return r.result.value;
+  return null;
+}
+
+/* ---------- UI utils ---------- */
+const out = document.getElementById('output');
+const status = document.getElementById('status');
+function clearOut(){ out.textContent=''; }
+function log(s){ const d=document.createElement('div'); d.textContent=s; out.appendChild(d); out.scrollTop = out.scrollHeight; }
+function hit(s){ const d=document.createElement('div'); d.className='hit'; d.textContent=s; out.appendChild(d); out.scrollTop = out.scrollHeight; }
+function warn(s){ const d=document.createElement('div'); d.style.color='crimson'; d.textContent=s; out.appendChild(d); out.scrollTop = out.scrollHeight; }
+
+/* ---------- core check flow (NO BRUTEFORCE) ---------- */
+async function analyzeInput(raw){
+  clearOut();
+  status.textContent = 'Mencoba mendeteksi format...';
+  raw = String(raw).trim();
+  if(!raw){ status.textContent='Input kosong.'; return; }
+
+  const rpcUrl = document.getElementById('rpcUrl').value.trim();
+
+  // 1) Try Base58 decode
+  let triedSomething = false;
+  try{
+    const dec = decodeBase58(raw);
+    triedSomething = true;
+    log('Base58 decode: OK — byte length = ' + dec.length);
+    // If 32 bytes: could be pubkey or seed. Show both interpretations.
+    if(dec.length === 32){
+      // interpret as pubkey raw bytes
+      const asPub = encodeBase58(dec);
+      log('Interpretasi A (sebagai pubkey bytes): ' + asPub);
+      try{
+        status.textContent = 'Fetching balance (interpretasi pubkey)...';
+        const bal = await getBalanceRpc(rpcUrl, asPub);
+        log(`Balance (as pubkey): ${bal}`);
+      }catch(e){ log('Gagal fetch balance untuk interpretasi pubkey.'); }
+
+      // interpret as seed -> derive pubkey
+      try{
+        const seed = dec;
+        const kp = nacl.sign.keyPair.fromSeed(seed);
+        const derivedPub = encodeBase58(kp.publicKey);
+        log('Interpretasi B (sebagai seed 32 bytes) -> derived pubkey: ' + derivedPub);
+        try{
+          status.textContent = 'Fetching balance (interpretasi seed-derived)...';
+          const bal2 = await getBalanceRpc(rpcUrl, derivedPub);
+          log(`Balance (derived pubkey): ${bal2}`);
+        }catch(e){ log('Gagal fetch balance untuk derived pubkey.'); }
+      }catch(e){
+        log('Tidak bisa derive from seed (tweetnacl error).');
       }
-    ];
 
-    const container = document.getElementById("giveaway-list");
-    const today = new Date();
+      status.textContent = 'Selesai (32-byte base58). Periksa hasil di bawah.';
+      return;
+    }
 
-    giveaways.forEach((gw, index) => {
-      const div = document.createElement("div");
-      div.className = "giveaway";
+    // 64 bytes maybe secretKey (seed+pub)
+    if(dec.length === 64){
+      log('Interpretasi: Base58 64 bytes — mungkin secretKey (seed+pub).');
+      const seed = dec.slice(0,32);
+      const seedHex = uint8ToHex(seed);
+      log('Seed (hex): ' + seedHex);
+      try{
+        const kp = nacl.sign.keyPair.fromSeed(seed);
+        const derivedPub = encodeBase58(kp.publicKey);
+        hit('Derived pubkey: ' + derivedPub);
+        try{
+          status.textContent = 'Fetching balance...';
+          const bal = await getBalanceRpc(rpcUrl, derivedPub);
+          log('Balance: ' + bal);
+        }catch(e){ log('Gagal fetch balance.'); }
+      }catch(e){ log('Gagal derive keypair.'); }
+      status.textContent = 'Selesai (64-byte base58).';
+      return;
+    }
 
-      const title = document.createElement("div");
-      title.className = "title";
-      title.textContent = gw.title;
+    // other lengths: still show encoded pubkey if length==32 etc, otherwise inform
+    log('Decoded base58 length not 32/64 — tampilkan hex: ' + uint8ToHex(dec));
+    status.textContent = 'Hasil decode base58 (panjang tidak biasa).';
+    return;
+  }catch(e){
+    // not base58
+  }
 
-      const duration = document.createElement("div");
-      duration.className = "duration";
-      duration.textContent = `Durasi: ${formatDate(gw.startDate)} – ${formatDate(gw.endDate)}`;
+  // 2) Try Hex
+  try{
+    const s = raw.replace(/^0x/,'');
+    if(s.length >= 2 && s.length%2===0 && isHex(s)){
+      triedSomething = true;
+      const bytes = hexToBytes(s);
+      log('Hex decode OK — length bytes = ' + bytes.length);
+      if(bytes.length === 32){
+        // treat as seed and/or pubkey
+        hit('Hex 32 bytes — interpretasi seed/pubkey:');
+        // interpret as pubkey
+        try{
+          const asPub = encodeBase58(bytes);
+          log('Interpretasi pubkey: ' + asPub);
+          try{
+            status.textContent = 'Fetching balance (hex->pubkey)...';
+            const bal = await getBalanceRpc(rpcUrl, asPub);
+            log('Balance: ' + bal);
+          }catch(e){ log('Gagal fetch balance (hex->pubkey).'); }
+        }catch(e){}
 
-      const note = document.createElement("div");
-      note.className = "note";
-      note.innerHTML = parseLinks(gw.note); // ⬅️ link auto aktif
-
-      const link = document.createElement("a");
-      link.href = gw.link;
-      link.textContent = "Ikuti Giveaway";
-
-      const start = new Date(gw.startDate);
-      const end = new Date(gw.endDate);
-
-      let badge = document.createElement("div");
-      badge.className = "badge";
-
-      let countdownDiv = document.createElement("div");
-      countdownDiv.className = "countdown";
-      countdownDiv.id = "countdown-" + index;
-
-      div.appendChild(title);
-      div.appendChild(badge);
-      div.appendChild(duration);
-      div.appendChild(countdownDiv);
-      div.appendChild(note);
-
-      if (today < start) {
-        badge.textContent = "🔔 Belum Dimulai";
-        badge.classList.add("upcoming");
-        link.className = "link disabled";
-        link.textContent = "Belum Dimulai";
-        div.appendChild(link);
-        countdownDiv.textContent = "Mulai pada: " + formatDate(gw.startDate);
-      } else if (today > end) {
-        badge.textContent = "❌ Selesai";
-        badge.classList.add("ended");
-        link.className = "link disabled";
-        link.textContent = "Giveaway Selesai";
-        div.appendChild(link);
-
-        if (gw.winner && gw.winner.trim() !== "") {
-          const winnerDiv = document.createElement("div");
-          winnerDiv.className = "winner";
-          winnerDiv.innerHTML = "🏆 Pemenang: " + gw.winner;
-          if (gw.proof && gw.proof.trim() !== "") {
-            const proofLink = document.createElement("a");
-            proofLink.href = gw.proof;
-            proofLink.target = "_blank";
-            proofLink.textContent = "📎 Lihat Bukti";
-            winnerDiv.appendChild(proofLink);
-          }
-          div.appendChild(winnerDiv);
-        } else {
-          const pendingDiv = document.createElement("div");
-          pendingDiv.className = "pending";
-          pendingDiv.textContent = "Menunggu pengumuman pemenang...";
-          div.appendChild(pendingDiv);
-        }
+        // interpret as seed -> derive
+        try{
+          const kp = nacl.sign.keyPair.fromSeed(bytes);
+          const derivedPub = encodeBase58(kp.publicKey);
+          log('Interpretasi seed -> derived pubkey: ' + derivedPub);
+          try{
+            status.textContent = 'Fetching balance (derived)...';
+            const bal2 = await getBalanceRpc(rpcUrl, derivedPub);
+            log('Balance derived: ' + bal2);
+          }catch(e){ log('Gagal fetch balance untuk derived.'); }
+        }catch(e){}
+        status.textContent = 'Selesai (hex 32 bytes).';
+        return;
+      } else if(bytes.length === 64){
+        log('Hex 64 bytes — try seed+pub (take first 32 bytes as seed).');
+        const seed = bytes.slice(0,32);
+        const kp = nacl.sign.keyPair.fromSeed(seed);
+        const derivedPub = encodeBase58(kp.publicKey);
+        hit('Derived pubkey: ' + derivedPub);
+        try{
+          status.textContent = 'Fetching balance...';
+          const bal = await getBalanceRpc(rpcUrl, derivedPub);
+          log('Balance: ' + bal);
+        }catch(e){ log('Gagal fetch balance.'); }
+        status.textContent = 'Selesai (hex 64 bytes).';
+        return;
       } else {
-        badge.textContent = "✅ Sedang Berlangsung";
-        badge.classList.add("active");
-        link.className = "link";
-        div.appendChild(link);
-
-        // countdown realtime
-        function updateCountdown() {
-          const now = new Date().getTime();
-          const distance = new Date(gw.endDate).getTime() - now;
-
-          if (distance <= 0) {
-            countdownDiv.textContent = "Waktu habis!";
-            return;
-          }
-          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-          countdownDiv.textContent = `⏳ Sisa waktu: ${days}h ${hours}j ${minutes}m ${seconds}d`;
-        }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        log('Hex decode length bukan 32/64 — tidak dapat derive tanpa informasi tambahan.');
+        status.textContent = 'Decode hex selesai (panjang tidak biasa).';
+        return;
       }
+    }
+  }catch(e){
+    // ignore
+  }
 
-      container.appendChild(div);
-    });
-  </script>
+  // 3) Try base64
+  try{
+    const bytes = base64ToBytes(raw);
+    triedSomething = true;
+    log('Base64 decode OK — length bytes = ' + bytes.length);
+    if(bytes.length === 32){
+      hit('Base64 32 bytes — interpretasi seed/pubkey:');
+      // as pubkey
+      const asPub = encodeBase58(bytes);
+      log('Interpretasi pubkey: ' + asPub);
+      try{
+        status.textContent = 'Fetching balance (base64->pubkey)...';
+        const bal = await getBalanceRpc(rpcUrl, asPub);
+        log('Balance: ' + bal);
+      }catch(e){ log('Gagal fetch balance.'); }
+      // as seed
+      try{
+        const kp = nacl.sign.keyPair.fromSeed(bytes);
+        const derivedPub = encodeBase58(kp.publicKey);
+        log('Interpretasi seed -> derived pubkey: ' + derivedPub);
+        try{
+          status.textContent = 'Fetching balance (derived)...';
+          const bal2 = await getBalanceRpc(rpcUrl, derivedPub);
+          log('Balance derived: ' + bal2);
+        }catch(e){ log('Gagal fetch balance derived.'); }
+      }catch(e){}
+      status.textContent = 'Selesai (base64 32 bytes).';
+      return;
+    } else if(bytes.length === 64){
+      log('Base64 64 bytes — treated as secretKey maybe. Using first 32 bytes as seed.');
+      const seed = bytes.slice(0,32);
+      const kp = nacl.sign.keyPair.fromSeed(seed);
+      const derivedPub = encodeBase58(kp.publicKey);
+      hit('Derived pubkey: ' + derivedPub);
+      try{
+        status.textContent = 'Fetching balance...';
+        const bal = await getBalanceRpc(rpcUrl, derivedPub);
+        log('Balance: ' + bal);
+      }catch(e){ log('Gagal fetch balance.'); }
+      status.textContent = 'Selesai (base64 64 bytes).';
+      return;
+    } else {
+      log('Base64 decoded length bukan 32/64.');
+      status.textContent = 'Base64 decode selesai (panjang tidak biasa).';
+      return;
+    }
+  }catch(e){
+    // not base64
+  }
+
+  // 4) Fallback: treat input as pubkey string and try fetching balance directly
+  if(!triedSomething){
+    log('Tidak terdeteksi format seed/secret. Mencoba treat sebagai pubkey string dan fetch balance...');
+  } else {
+    log('Format terdeteksi tapi tidak cocok untuk derive. Mencoba treat sebagai pubkey string dan fetch balance...');
+  }
+  try{
+    status.textContent = 'Fetching balance (treat as pubkey)...';
+    const bal = await getBalanceRpc(rpcUrl, raw);
+    hit(raw + ' | Balance: ' + bal);
+    status.textContent = 'Selesai (treat-as-pubkey).';
+    return;
+  }catch(e){
+    warn('Gagal fetch balance sebagai pubkey. Kemungkinan input bukan pubkey/seed/secret yang valid, atau RPC error.');
+    status.textContent = 'Tidak bisa decode atau fetch — tanpa brute-force tidak mungkin menemukan seed dari pubkey.';
+    log('Saran:');
+    log('- Jika kamu memiliki seed (32 bytes) atau secretKey (64 bytes) dalam format lain, paste format itu (hex/base64/base58).');
+    log('- Jika yang kamu punya hanyalah pubkey dan kamu ingin seed — satu-satunya cara adalah brute-force (sangat mahal/lama) atau menggunakan backup seed dari wallet asli.');
+    log('- Jika ingin, saya bisa tambahkan opsi untuk memulai brute-force (tanggung jawab pengguna) — tapi sekarang skrip tidak melakukan brute-force.');
+    return;
+  }
+}
+
+/* ---------- hooks ---------- */
+document.getElementById('checkBtn').addEventListener('click', async ()=>{
+  const t = document.getElementById('targetInput').value;
+  await analyzeInput(t);
+});
+document.getElementById('clearBtn').addEventListener('click', ()=>{ document.getElementById('targetInput').value=''; clearOut(); status.textContent='Ready'; });
+document.getElementById('helpBtn').addEventListener('click', ()=>{
+  clearOut();
+  log('Petunjuk singkat:');
+  log('- Tempel pubkey SOL (base58) → klik Cek → akan fetch balance.');
+  log('- Tempel seed/secret (base58/base64/hex) 32/64 bytes → script akan decode dan derive pubkey + fetch balance.');
+  log('- Jika input hanya pubkey dan kamu butuh seed: tidak mungkin tanpa brute-force. Skrip ini TIDAK melakukan brute-force.');
+  status.textContent = 'Petunjuk ditampilkan.';
+});
+</script>
 </body>
 </html>
